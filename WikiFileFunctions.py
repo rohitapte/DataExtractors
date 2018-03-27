@@ -1,6 +1,7 @@
 import os
 from nltk.tokenize import sent_tokenize
 import re
+from gensim.models import Word2Vec
 
 class GlobalVariables(object):
     def __init__(self):
@@ -10,6 +11,9 @@ class GlobalVariables(object):
         self.ENCODING='utf-8'
         self.character_vocab=[' ', 'e', 'a', 't', 'i', 'n', 'o', 'r', 's', 'h', 'l', 'd', 'c', 'u', 'm', 'f', 'p', 'g', 'w', 'y', 'b', ',', '.', 'v', 'START_TOKEN', 'END_TOKEN', 'k', '"', '1', '0', '9', '2', '-', 'x', 'j', "'", ')', '(',
                                '8', '5', '3', '4', '6', 'z', '7', 'q', '%', ':', ';', '–', '/', '\xa0', '$', 'é', '—', '’', '&', '_', ']', '[', 'á', '²', '”', '“','UNKNOWN_TOKEN']
+        self.MODEL_SIZE=50
+        self.MODEL_WINDOW=5
+        self.MODEL_SAVE_PATH='C:/Users/tihor/Documents/model.model'
 
 
 class WikiFileSentences(object):
@@ -39,3 +43,7 @@ class WikiFileSentences(object):
                                 char_sentence.append('END_TOKEN')
                                 yield char_sentence
 
+vars=GlobalVariables()
+sentence_stream=WikiFileSentences()
+model=Word2Vec(sentence_stream,size=vars.MODEL_SIZE,window=vars.MODEL_WINDOW,min_count=1)
+model.save(vars.MODEL_SAVE_PATH)
