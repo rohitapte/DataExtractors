@@ -39,6 +39,3 @@ class WikiFileSentences(object):
                                 char_sentence.append('END_TOKEN')
                                 yield char_sentence
 
-zz=WikiFileSentences()
-for item in zz:
-    print(item)
