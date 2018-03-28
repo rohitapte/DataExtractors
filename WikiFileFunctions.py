@@ -13,7 +13,7 @@ class GlobalVariables(object):
                                '8', '5', '3', '4', '6', 'z', '7', 'q', '%', ':', ';', '–', '/', '\xa0', '$', 'é', '—', '’', '&', '_', ']', '[', 'á', '²', '”', '“','UNKNOWN_TOKEN']
         self.MODEL_SIZE=50
         self.MODEL_WINDOW=5
-        self.MODEL_SAVE_PATH='C:/Users/tihor/Documents/model.model'
+        self.MODEL_SAVE_PATH='C:/Users/tihor/Documents/'
 
 
 class WikiFileSentences(object):
@@ -44,6 +44,11 @@ class WikiFileSentences(object):
                                 yield char_sentence
 
 vars=GlobalVariables()
-sentence_stream=WikiFileSentences()
-model=Word2Vec(sentence_stream,size=vars.MODEL_SIZE,window=vars.MODEL_WINDOW,min_count=1)
-model.save(vars.MODEL_SAVE_PATH)
+model_sizes=[16,32,64,128]
+word_sizes=[3,5,7,10,15]
+for model_size in model_sizes:
+    for word_size in word_sizes:
+        sentence_stream=WikiFileSentences()
+        filename='word2Vec_vectorSize'+str(model_size)+'_wordSize_'+str(word_size)+'.model'
+        model=Word2Vec(sentence_stream,size=model_size,window=word_size,min_count=1)
+        model.save(os.path.join(vars.MODEL_SAVE_PATH,filename))
